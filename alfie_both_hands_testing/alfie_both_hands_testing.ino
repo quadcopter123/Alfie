@@ -1,6 +1,6 @@
 //Alfie test code by jessie
 //used for testing as very simple to control each servo from serial monitor
-//inputs take form of "[degree wanted to move to][letter from a-g, a is thumb f is pinkie g is wrist][L or R for left and right hand]"
+//inputs take form of "[degree wanted to move to][letter from a-f, a is thumb e is pinkie f100fR is wrist][L or R for left and right hand]"
 //eg "45aR" would write the right thumb to angle 45% of it's max range "100fL," would write the left wrist 100% of it's range
 //max range was taken from previous code, update and calibrate for better precision
 //could also be used with a gui with serial communication eg C#
@@ -15,6 +15,22 @@
 
 Servo Lfingers[6]; //servo object array thumb is 0 pinkie is 4 wrist is 5
 Servo Rfingers[6]; //could be a 2d array instead
+
+int l[][5] = {
+  {90,150},
+  {80,180},
+  {110,20},
+  {120,30},
+  {70,160}
+};
+
+int r[][5] = {
+  {180,130},
+  {80,170},
+  {90,170},
+  {70,150},
+  {90,10}
+};
 
 String readString;
 
@@ -67,31 +83,31 @@ void loop() {
 void write_left(int n) {
   long val;
   if (readString.indexOf('a') > 0) {
-    val = map(n, 0, 100, 110, 180);
+    val = map(n, 0, 100, l[0,0], l[1,0]);
     Lfingers[0].write(val);
     Serial.print('a');
   }
 
   if (readString.indexOf('b') > 0) {
-    val = map(n, 0, 100, 20, 110);
+    val = map(n, 0, 100, l[0,1], l[1,1]);
     Lfingers[1].write(val);
     Serial.print('b');
   }
 
   if (readString.indexOf('c') > 0) {
-    val = map(n, 0, 100, 20, 110);
+    val = map(n, 0, 100, l[0,2], l[1,2]);
     Lfingers[2].write(n);
     Serial.print('c');
   }
 
   if (readString.indexOf('d') > 0) {
-    val = map(n, 0, 100, 20, 110);
+    val = map(n, 0, 100, l[0,3], l[1,3]);
     Lfingers[3].write(n);
     Serial.print('d');
   }
 
   if (readString.indexOf('e') > 0) {
-    val = map(n, 0, 100, 30, 120);
+    val = map(n, 0, 100, l[0,4], l[1,4]);
     Lfingers[4].write(n);
     Serial.print('e');
   }
@@ -110,37 +126,37 @@ void write_left(int n) {
 void write_right(int n) {
   long val;
   if (readString.indexOf('a') > 0) {
-    val = map(n, 0, 100, 140, 100);
+    val = map(n, 0, 100, r[0,0], r[1,0]);
     Rfingers[0].write(val);
     Serial.print('a');
   }
 
   if (readString.indexOf('b') > 0) {
-    val = map(n, 0, 100, 20, 90);
+    val = map(n, 0, 100, r[0,1], r[1,1]);
     Rfingers[1].write(val);
     Serial.print('b');
   }
 
   if (readString.indexOf('c') > 0) {
-    val = map(n, 0, 100, 30, 100);
+    val = map(n, 0, 100, r[0,2], r[1,2]);
     Rfingers[2].write(n);
     Serial.print('c');
   }
 
   if (readString.indexOf('d') > 0) {
-    val = map(n, 0, 100, 30, 100);
+    val = map(n, 0, 100, r[0,3], r[1,3]);
     Rfingers[3].write(n);
     Serial.print('d');
   }
 
   if (readString.indexOf('e') > 0) {
-    val = map(n, 0, 100, 0, 180);
+    val = map(n, 0, 100, r[0,4], r[1,4]);
     Rfingers[4].write(n);
     Serial.print('e');
   }
 
   if (readString.indexOf('f') > 0) {
-    map(n, 0, 100, 150, 80);
+    map(n, 0, 100, 0, 180);
     Rfingers[5].write(n);
     Serial.print('f');
   }
